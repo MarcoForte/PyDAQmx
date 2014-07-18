@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+from __future__ import unicode_literals
 try:  
     from PyDAQmx import *
 except NotImplementedError:
@@ -15,4 +15,4 @@ else:
     print("The library is : ", DAQmxConfig.lib_name)
 
 task = Task()
-task.CreateAIVoltageChan("Dev1/ai0","",DAQmx_Val_Cfg_Default,-10.0,10.0,DAQmx_Val_Volts,None)
+task.CreateAIVoltageChan(b"Dev1/ai0",b"",DAQmx_Val_Cfg_Default,-10.0,10.0,DAQmx_Val_Volts,None)

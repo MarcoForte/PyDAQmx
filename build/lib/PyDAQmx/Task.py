@@ -7,7 +7,7 @@ from PyDAQmx.DAQmxFunctions import *
 # All the function of this list will be converted to method of the task object
 # The name of the method will be the same name as the name of the DAQmx function without the 
 # the DAQmx in front of the name
-task_function_list = [name for name in function_dict.keys() if \
+task_function_list = [name for name in list(function_dict.keys()) if \
                  len(function_dict[name]['arg_type'])>0 and \
                  (function_dict[name]['arg_type'][0] is TaskHandle) and\
                  'task' in function_dict[name]['arg_name'][0]]
