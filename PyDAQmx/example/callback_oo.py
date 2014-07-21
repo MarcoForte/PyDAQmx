@@ -1,6 +1,13 @@
+from __future__ import print_function
 from PyDAQmx import *
 from PyDAQmx.DAQmxCallBack import *
 from numpy import zeros
+# Python 2.x and 3.x compatability
+try:
+    input = raw_input
+except NameError:
+    pass
+
 
 """This example is a PyDAQmx version of the ContAcq_IntClk.c example
 It illustrates the use of callback functions
@@ -32,14 +39,14 @@ def EveryNCallback_py(taskHandle, everyNsamplesEventType, nSamples, callbackData
     data = zeros(1000)
     DAQmxReadAnalogF64(taskHandle,1000,10.0,DAQmx_Val_GroupByScanNumber,data,1000,byref(read),None)
     callbackdata.extend(data.tolist())
-    print "Acquired total %d samples"%len(callbackdata)
+    print("Acquired total %d samples"%len(callbackdata))
     return 0 # The function should return an integer
 
 # Convert the python function to a CFunction      
 EveryNCallback = DAQmxEveryNSamplesEventCallbackPtr(EveryNCallback_py)
 
 def DoneCallback_py(taskHandle, status, callbackData):
-    print "Status",status.value
+    print("Status",status.value)
     return 0 # The function should return an integer
 
 # Convert the python function to a CFunction      
@@ -51,15 +58,15 @@ DoneCallback = DAQmxDoneEventCallbackPtr(DoneCallback_py)
 #DAQmxResetDevice('dev1')
 
 task=Task()
-task.CreateAIVoltageChan("Dev1/ai0","",DAQmx_Val_RSE,-10.0,10.0,DAQmx_Val_Volts,None)
-task.CfgSampClkTiming("",10000.0,DAQmx_Val_Rising,DAQmx_Val_ContSamps,1000)
+task.CreateAIVoltageChan(b"Dev1/ai0",b"",DAQmx_Val_RSE,-10.0,10.0,DAQmx_Val_Volts,None)
+task.CfgSampClkTiming(b"",10000.0,DAQmx_Val_Rising,DAQmx_Val_ContSamps,1000)
 
 task.RegisterEveryNSamplesEvent(DAQmx_Val_Acquired_Into_Buffer,1000,0,EveryNCallback,id_a)
 task.RegisterDoneEvent(0,DoneCallback,None)
 
 task.StartTask()
 
-raw_input('Acquiring samples continuously. Press Enter to interrupt\n')
+input('Acquiring samples continuously. Press Enter to interrupt\n')
 
 task.StopTask()
 task.ClearTask()

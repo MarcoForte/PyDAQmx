@@ -17,7 +17,7 @@ class MultiChannelAnalogInput():
         readAll(), return a dictionary name:value
     """
     def __init__(self,physicalChannel, limit = None, reset = False):
-        if type(physicalChannel) == type(""):
+        if type(physicalChannel) == type(b""):
             self.physicalChannel = [physicalChannel]
         else:
             self.physicalChannel  =physicalChannel
@@ -34,8 +34,8 @@ class MultiChannelAnalogInput():
         # Create one task handle per Channel
         taskHandles = dict([(name,TaskHandle(0)) for name in self.physicalChannel])
         for name in self.physicalChannel:
-            DAQmxCreateTask("",byref(taskHandles[name]))
-            DAQmxCreateAIVoltageChan(taskHandles[name],name,"",DAQmx_Val_RSE,
+            DAQmxCreateTask(b"",byref(taskHandles[name]))
+            DAQmxCreateAIVoltageChan(taskHandles[name],name,b"",DAQmx_Val_RSE,
                                      self.limit[name][0],self.limit[name][1],
                                      DAQmx_Val_Volts,None)
         self.taskHandles = taskHandles
@@ -55,5 +55,5 @@ class MultiChannelAnalogInput():
 
 
 if __name__ == '__main__':
-    multipleAI = MultiChannelAnalogInput(["Dev1/ai2","Dev1/ai1"])
+    multipleAI = MultiChannelAnalogInput([b"Dev1/ai2",b"Dev1/ai1"])
     multipleAI.configure()

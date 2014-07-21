@@ -1,3 +1,4 @@
+from __future__ import print_function
 from PyDAQmx import *
 from PyDAQmx.DAQmxCallBack import *
 from numpy import zeros
@@ -17,8 +18,8 @@ class CallbackTask(Task):
         Task.__init__(self)
         self._data = zeros(1000)
         self.read = int32()
-        self.CreateAIVoltageChan("Dev1/ai0","",DAQmx_Val_RSE,-10.0,10.0,DAQmx_Val_Volts,None)
-        self.CfgSampClkTiming("",10000.0,DAQmx_Val_Rising,DAQmx_Val_ContSamps,1000)
+        self.CreateAIVoltageChan(b"Dev1/ai0",b"",DAQmx_Val_RSE,-10.0,10.0,DAQmx_Val_Volts,None)
+        self.CfgSampClkTiming(b"",10000.0,DAQmx_Val_Rising,DAQmx_Val_ContSamps,1000)
         self.AutoRegisterEveryNSamplesEvent(DAQmx_Val_Acquired_Into_Buffer,1000,0)
         self.AutoRegisterDoneEvent(0)
         self._data_lock = threading.Lock()
@@ -29,7 +30,7 @@ class CallbackTask(Task):
             self._newdata_event.set()
         return 0 # The function should return an integer
     def DoneCallback(self, status):
-        print "Status",status.value
+        print("Status",status.value)
         return 0 # The function should return an integer
     def get_data(self, blocking=True, timeout=None):
         if blocking:
@@ -44,10 +45,10 @@ class CallbackTask(Task):
 task=CallbackTask()
 task.StartTask()
 
-print "Acquiring 10 * 1000 samples in continuous mode."
+print("Acquiring 10 * 1000 samples in continuous mode.")
 for _ in range(10):
     task.get_data(timeout=10.0)
-    print "Acquired %d points" % task.read.value
+    print("Acquired %d points" % task.read.value)
 
 task.StopTask()
 task.ClearTask()
