@@ -86,7 +86,7 @@ def _add_keywords(arg_name):
     s = """def add_keywords_decorator(f):
     def function({0}):return f({0})
     return function"""
-    exec s.format(', '.join(arg_name))
+    exec(s.format(', '.join(arg_name)))
     return locals()['add_keywords_decorator']
 
 

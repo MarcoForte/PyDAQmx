@@ -45,7 +45,7 @@ for line in include_file:
         name = m.group(1)
         value = m.group(2)
         try:
-            exec name + '=' + value
+            exec(name + '=' + value)
         except NameError:
             pass
         except SyntaxError:

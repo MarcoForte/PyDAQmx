@@ -35,7 +35,7 @@ if sys.platform.startswith('win'):
 
 
     def get_lib():
-        lib_name = 'nicaiu'
+        #lib_name = 'nicaiu' # Should be able to comment out in linux also, this line seems redundant
         DAQlib = ctypes.windll.LoadLibrary(lib_name)
         DAQlib_variadic = ctypes.cdll.LoadLibrary(lib_name)
         return (DAQlib, DAQlib_variadic)
@@ -52,8 +52,7 @@ elif sys.platform.startswith('linux'):
 
         def get_lib():
             lib_name = find_library('nidaqmx')
-            DAQlib = ctypes.cdll.LoadLibrary(lib_name)
-            DAQlib_variadic = DAQlib
+            DAQlib_variadic = DAQlib = ctypes.cdll.LoadLibrary(lib_name)
             return (DAQlib, DAQlib_variadic)
 
 
@@ -68,9 +67,9 @@ elif sys.platform.startswith('linux'):
             lib_name = find_library('nidaqmxbase')
             ctypes.CDLL('/usr/local/lib/liblvrtdark.so',
                         mode=ctypes.RTLD_GLOBAL)
-            DAQlib = ctypes.cdll.LoadLibrary(lib_name)
-            DAQlib_variadic = DAQlib
+            DAQlib_variadic = DAQlib = ctypes.cdll.LoadLibrary(lib_name)
             return (DAQlib, DAQlib_variadic)
+
 
 
 # If the DAQmxConfigTest has been imported, then uses the value from this file
@@ -89,8 +88,7 @@ if 'DAQmxConfigTest' in list(sys.modules.keys()):
                 def __getattr__(self, name):
                     return lambda *args: 0
 
-            DAQlib = _nothing()
-            DAQlib_variadic = DAQlib
+            DAQlib_variadic = DAQlib = _nothing()
             return (DAQlib, DAQlib_variadic)
 
 
