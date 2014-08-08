@@ -7,7 +7,7 @@ import sys
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
 
-version = '1.3'
+version = '1.4'
 
 class Test(TestCommand):
     def finalize_options(self):
@@ -91,7 +91,7 @@ Please send bug reports or feedback to `{auth_name}`_.
 Version history
 ===============
 Main changes:
-
+* 1.4 Works with Python 2 and 3
 * 1.3 PyDAQmx support the both the NIDAQmx and NIDAQmxBase drivers
 * 1.2.5.2 Bug in version 1.2.5 corrected (Task were not working)
 * 1.2.5.1 Add keywords to all the functions (version 1.2.5 is not working with python 3)
@@ -111,7 +111,7 @@ Main changes:
 setup_parameters = dict(version=version,
       name = "PyDAQmx",
       author_email="pierre.clade@spectro.jussieu.fr",
-      maintainer_email="pierre.clade@spectro.jussieu.fr",
+      maintainer_email="fortemarco.irl@gmail.com",
       url='http://pythonhosted.org/PyDAQmx/',
       license='''\
 This software can be used under one of the following two licenses: \
@@ -137,7 +137,7 @@ author.''',
      use_2to3=True, 
         cmdclass = {'test': Test})
 
-auth_name = "Pierre Cladé"
+auth_name = "Pierre Cladé & Marco Forte"
 setup(author=auth_name,
   maintainer=auth_name,
   long_description = long_description.format(auth_name=auth_name), 
