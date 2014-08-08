@@ -7,7 +7,6 @@ PyDAQmx/DAQmxFunctions.py
 PyDAQmx/DAQmxTypes.py
 PyDAQmx/Task.py
 PyDAQmx/__init__.py
-PyDAQmx/tidy.py
 PyDAQmx.egg-info/PKG-INFO
 PyDAQmx.egg-info/SOURCES.txt
 PyDAQmx.egg-info/dependency_links.txt
