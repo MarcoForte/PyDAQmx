@@ -136,7 +136,7 @@ class Task(CallbackParent):
 
     def getDeviceName(self):
         a = c_char_p(b' ')
-        b = c_ulong(30)
+        b = c_ulong(100)
         DAQmxGetSysDevNames(a, b)
         return a.value.decode('utf-8').split(',')[-1].strip()
 
